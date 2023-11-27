@@ -11,31 +11,9 @@ pipeline {
 
         stage('Checkout') {
             steps { 
-              git branch: 'master', credentialsId: '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', url: 'https://github.com/guilherme-beltran/DollaroPoker.git' 
+              git branch: 'master', url: 'https://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@github.com/guilherme-beltran/DollaroPoker.git' 
             } 
         }
-        
-        stage('Build') {
-            steps {
-                // Compilar o projeto ASP.NET (por exemplo, usando o MSBuild)
-                bat 'msbuild.exe Backoffice.sln'
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                // Executar testes (por exemplo, NUnit, MSTest, etc.)
-                bat 'vstest.console.exe Backoffice.Tests.dll'
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                // Implantar a aplicação no servidor IIS
-                bat 'xcopy /s/y C:\\inetpub\\wwwroot\\dollaro'
-            }
-        }
-    }
     
     post {
         success {
