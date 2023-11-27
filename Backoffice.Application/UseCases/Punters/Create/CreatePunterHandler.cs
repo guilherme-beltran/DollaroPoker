@@ -113,7 +113,7 @@ internal class CreatePunterHandler : ICreatePunterHandler
 
             await _unitOfWork.Commit(cancellationToken: cancellationToken);
 
-            return Response.Sucess();
+            return Response.Sucess($"{request.Username} created successfully.");
         }
         catch (MySqlException ex)
         {

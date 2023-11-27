@@ -110,17 +110,17 @@ internal sealed class CreateUserHandler : ICreateUserHandler
 
             await _unitOfWork.Commit(cancellationToken: cancellationToken);
 
-            return Response.Sucess();
+            return Response.Sucess($"{request.Username} created successfully.");
         }
         catch (MySqlException ex)
         {
             _unitOfWork.Rollback();
-            return PunterErrors.Exception("CreatePunterHandler.Commit()", $"{ex.Message}");
+            return PunterErrors.Exception("CreateUserHandler.Commit()", $"{ex.Message}");
         }
         catch (Exception ex)
         {
             _unitOfWork.Rollback();
-            return PunterErrors.Exception("CreatePunterHandler.Commit()", $"{ex.Message}");
+            return PunterErrors.Exception("CreateUserHandler.Commit()", $"{ex.Message}");
         }
         finally
         {

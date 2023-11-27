@@ -2,7 +2,7 @@
 
 public class Response
 {
-    private Response(bool isSuccess, Error error, object? obj = null)
+    private Response(bool isSuccess, Error error, object? obj = null, string? message = null)
     {
         if (isSuccess && error != Error.None ||
             !isSuccess && error == Error.None)
@@ -11,18 +11,20 @@ public class Response
         }
 
         IsSuccess = isSuccess;
+        Message = message;
+        Obj = obj;
         Error = error;
-        Obj = obj!;
     }
 
     public bool IsSuccess { get; }
+    public string Message { get; }
+    public object Obj { get; }
     public bool IsFailure => !IsSuccess;
     public Error Error { get; }
-    public object Obj { get; }
 
-    public static Response Sucess() => new(true, Error.None);
-    public static Response SucessLogin(object obj) => new(true, Error.None, obj);
-    public static Response Failure(Error error) => new(false, error);
-    public static Response NotFound(Error error) => new(false, error);
+    public static Response Sucess(string? message = null) => new(isSuccess: true, error: Error.None, message: message);
+    public static Response SucessLogin(object obj) => new(isSuccess: true, error: Error.None, obj);
+    public static Response Failure(Error error) => new(isSuccess: false, error: error);
+    public static Response NotFound(Error error) => new(isSuccess: false, error: error);
 
 }

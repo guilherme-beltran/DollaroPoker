@@ -9,7 +9,6 @@ public static class UserErrors
     public static readonly Error NullReference = new("UserError.NullReference", HttpStatusCode.BadRequest, "Invalid request. Please validate the data entered");
     public static readonly Error ExceptionResult = new("UserError.ExceptionResult", HttpStatusCode.InternalServerError);
     public static readonly Error AlreadyRegistered = new("UserError.AlreadyRegistered", HttpStatusCode.Conflict, "User already registered.");
-    public static readonly Error CreatedSuccessfully = new("UserError.CreatedSuccessfully", HttpStatusCode.Created, "User created successfully.");
     public static readonly Error InvalidPassword = new("UserError.InvalidPassword", HttpStatusCode.BadRequest, "Password don't match.");
 
     public static Error SendNotifications(IReadOnlyCollection<Notification>? notifications)

@@ -9,7 +9,6 @@ public static class PunterErrors
     public static readonly Error NullReference = new("PunterErrors.NullReference", HttpStatusCode.BadRequest, "Invalid request. Please validate the data entered");
     public static readonly Error ExceptionResult = new("PunterErrors.ExceptionResult", HttpStatusCode.InternalServerError);
     public static readonly Error AlreadyRegistered = new("PunterErrors.AlreadyRegistered", HttpStatusCode.Conflict, "Punter already registered.");
-    public static readonly Error CreatedSuccessfully = new("PunterErrors.CreatedSuccessfully", HttpStatusCode.Created, "Punter created successfully.");
     public static readonly Error InvalidPassword = new("PunterErrors.InvalidPassword", HttpStatusCode.BadRequest, "Password don't match.");
 
     public static Error SendNotifications(IReadOnlyCollection<Notification>? notifications)

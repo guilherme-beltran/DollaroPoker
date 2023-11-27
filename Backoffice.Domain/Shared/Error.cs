@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Backoffice.Domain.Shared;
 
-public sealed record Error(string Key, HttpStatusCode StatusCode, string? Message = null, IReadOnlyCollection<Notification>? Notifications = null)
+public sealed record Error(string? Key = null, HttpStatusCode? StatusCode = null, string? Message = null, IReadOnlyCollection<Notification>? Notifications = null)
 {
     public static readonly Error None = new(Key: string.Empty, StatusCode: HttpStatusCode.OK, Message: string.Empty);
 
