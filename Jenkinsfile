@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clonar o repositório do GitHub
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'ghp_7Eoo8HYtVLBnGmAOxsyRqNPWTXNAj3YKs4y', url: 'https://github.com/guilherme-beltran/DollaroPoker.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/guilherme-beltran/DollaroPoker.git']]])
             }
         }
         
