@@ -2,24 +2,18 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
-            steps {
-                // Remova o step de checkout do GitSCM
-                // Clonar o repositório do GitHub usando o comando git clone
-                script {
-                    def gitUrl = 'https://github.com/guilherme-beltran/DollaroPoker.git'
-                    def credentialsId = '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'
-                    
-                    // Configurar as credenciais do Git
-                    withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'USERNAME',      passwordVariable: 'PASSWORD')]) {
-                        sh """
-                        git clone --branch master --single-branch --depth 1 ${gitUrl}
-                        """
-                    }
-                }
+
+        stage('Clean workspace'){
+            steps{
+                cleanWs()
             }
         }
 
+        stage('Checkout') {
+            steps { 
+              git branch: 'master', credenciaisId: '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', url: 'https://github.com/guilherme-beltran/DollaroPoker.git' 
+            } 
+        }
         
         stage('Build') {
             steps {
