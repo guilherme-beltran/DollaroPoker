@@ -11,7 +11,7 @@ pipeline {
 
         stage('Checkout') {
             steps { 
-              git branch: 'master', credenciaisId: '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', url: 'https://github.com/guilherme-beltran/DollaroPoker.git' 
+              git branch: 'master', credentialsId: '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', url: 'https://github.com/guilherme-beltran/DollaroPoker.git' 
             } 
         }
         
