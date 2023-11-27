@@ -30,7 +30,7 @@ internal sealed class LoginHandler : ILoginHandler
         }
         catch (NullReferenceException)
         {
-            UserErrors.ReturnNullReference("CreateUserHandler");
+            return UserErrors.ReturnNullReference("CreateUserHandler");
         }
         catch (Exception)
         {
@@ -45,7 +45,7 @@ internal sealed class LoginHandler : ILoginHandler
         {
             user = await _userRepository.GetByUsernameAsync(request.Username);
             if (user is null)
-                UserErrors.NotFound("LoginHandler.user", search: $"{request.Username}");
+                return UserErrors.NotFound("LoginHandler.user", search: $"{request.Username}");
         }
         catch (Exception)
         {

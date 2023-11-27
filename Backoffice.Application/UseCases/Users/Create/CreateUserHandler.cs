@@ -100,6 +100,7 @@ internal sealed class CreateUserHandler : ICreateUserHandler
                             password: request.Password,
                             jurisdiction: jurisdiction);
 
+        user.Encrypt();
 
         try
         {

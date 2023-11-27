@@ -132,7 +132,7 @@ public sealed class User : Entity
     [ForeignKey("TypeId")]
     public TypeUser TypeUser { get; set; }
 
-    public void CriptographyPassword()
+    public void Encrypt()
     {
         if (Password is null)
         {
@@ -145,6 +145,6 @@ public sealed class User : Entity
 
     public bool VerifyPassword(string password)
     {
-        return Password == password.EncryptUsingSHA256();
+        return Password == password;
     }
 }

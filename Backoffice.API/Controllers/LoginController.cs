@@ -23,10 +23,10 @@ namespace Backoffice.API.Controllers
         {
             var response = await handler.Handle(request);
 
-            if (response.Error.StatusCode == HttpStatusCode.BadRequest)
+            if (response.IsFailure && response.Error.StatusCode == HttpStatusCode.BadRequest)
                 return BadRequest(response);
 
-            if (response.Error.StatusCode == HttpStatusCode.InternalServerError)
+            if (response.IsFailure && response.Error.StatusCode == HttpStatusCode.InternalServerError)
                 return StatusCode(500, response);
 
             return Ok(response);

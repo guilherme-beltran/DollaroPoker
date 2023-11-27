@@ -1,4 +1,5 @@
-﻿using Backoffice.Domain.Interfaces;
+﻿using Backoffice.Domain.Extensions;
+using Backoffice.Domain.Interfaces;
 using Flunt.Notifications;
 using Flunt.Validations;
 
@@ -32,5 +33,10 @@ public class LoginCommand : Notifiable<Notification>, IRequest
                 .IsNotNullOrWhiteSpace(Username.Trim(), "LoginCommand.Username", "Email inválido.")
                 .IsGreaterThan(Username.Trim(), 3, "LoginCommand.Username", "E-mail informado é inválido.")
                 );
+
+        if (Password is not null)
+        {
+            Password = Criptography.EncryptUsingSHA256(Password);
+        }
     }
 }
