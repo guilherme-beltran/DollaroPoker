@@ -10,6 +10,7 @@ pipeline {
                       branches: [[name: 'master']], 
                       userRemoteConfigs: [[url: 'https://github.com/guilherme-beltran/DollaroPoker.git',
                                           credentialsId: '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']]])
+            }
         }
         
         stage('Build') {
