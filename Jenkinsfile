@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Implantar a aplicação no servidor IIS
-                bat 'xcopy /s/y C:\inetpub\wwwroot\dollaro'
+                bat 'xcopy /s/y C:\\inetpub\\wwwroot\\dollaro'
             }
         }
     }
