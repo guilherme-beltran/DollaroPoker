@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backoffice.Infra", "Backoff
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backoffice.Application", "Backoffice.Application\Backoffice.Application.csproj", "{3D1E5ED4-CD53-451C-8FB4-C7BE1C0ED2EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backoffice.Tests", "Backoffice.Tests\Backoffice.Tests.csproj", "{009C89B0-8AB0-4D62-BA4C-783ACBE91900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backoffice.Tests", "Backoffice.Tests\Backoffice.Tests.csproj", "{009C89B0-8AB0-4D62-BA4C-783ACBE91900}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{20F010F3-F9A6-4606-B9D5-2DF8D641412D}"
+	ProjectSection(SolutionItems) = preProject
+		Jenkinsfile = Jenkinsfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
