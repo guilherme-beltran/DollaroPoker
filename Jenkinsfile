@@ -3,15 +3,23 @@ pipeline {
     
     stages {
         stage('Checkout') {
-
             steps {
-            // Clonar o repositório do GitHub
-            checkout([$class: 'GitSCM', 
-                      branches: [[name: 'master']], 
-                      userRemoteConfigs: [[url: 'https://github.com/guilherme-beltran/DollaroPoker.git',
-                                          credentialsId: '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']]])
+                // Remova o step de checkout do GitSCM
+                // Clonar o repositório do GitHub usando o comando git clone
+                script {
+                    def gitUrl = 'https://github.com/guilherme-beltran/DollaroPoker.git'
+                    def credentialsId = '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'
+                    
+                    // Configurar as credenciais do Git
+                    withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'USERNAME',      passwordVariable: 'PASSWORD')]) {
+                        sh """
+                        git clone --branch master --single-branch --depth 1 ${gitUrl}
+                        """
+                    }
+                }
             }
         }
+
         
         stage('Build') {
             steps {
