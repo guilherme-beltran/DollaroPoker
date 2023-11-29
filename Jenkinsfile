@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        RELEASE_VERSION = "release_version_1.21"
+        RELEASE_VERSION = "release_version_1.1.0"
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                bat 'dotnet restore .\\Teste.sln'
+                                bat 'dotnet restore .\\Backoffice.sln'
                             } catch (Exception e) {
                                 echo "Erro durante a restauração: ${e.message}"
                                 currentBuild.result = 'FAILURE'
@@ -34,7 +34,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                bat 'dotnet build .\\Teste.sln --configuration Release --no-restore'
+                                bat 'dotnet build .\\Backoffice.sln --configuration Release --no-restore'
                             } catch (Exception e) {
                                 echo "Erro durante a compilação: ${e.message}"
                                 currentBuild.result = 'FAILURE'
@@ -68,7 +68,7 @@ pipeline {
                             bat "git pull origin master"
         
                             // Publicar
-                            bat 'dotnet publish .\\Teste.sln --configuration Release --output C:\\inetpub\\wwwroot\\teste'
+                            bat 'dotnet publish .\\Backoffice.sln --configuration Release --output C:\\inetpub\\wwwroot\\dollaro'
         
                             // Enviar para o repositório
                             bat "git push origin ${RELEASE_VERSION}"
