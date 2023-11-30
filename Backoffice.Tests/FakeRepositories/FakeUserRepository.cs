@@ -32,9 +32,9 @@ public class FakeUserRepository
     }
 
     public static User CreateUser() 
-        => new(id: 1, 
-               username: "Usuario padrão", 
-               password: "senha123",
-               jurisdiction: new Jurisdiction(id: 7,
-                                              sknId: 82));
+        => User.Create(id: 1,
+                       username: "Usuario padrão",
+                       password: "senha123",
+                       jurisdiction: new Jurisdiction(id: 7,
+                                                      sknId: 82));
 }

@@ -9,7 +9,7 @@ public sealed class Punter : Entity
 {
     public Punter() { }
 
-    public Punter(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction)
+    private Punter(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction)
     {
         PunterId = id;
         FirstName = firstname;
@@ -19,7 +19,7 @@ public sealed class Punter : Entity
         Password = password;
         Jurisdiction = jurisdiction;
         RegistrationDate = DateTime.UtcNow;
-        Credit = 5000;
+        Access = "ALLOW";
     }
 
     [Key]
@@ -244,6 +244,15 @@ public sealed class Punter : Entity
 
     [ForeignKey("FkUser")]
     public User? User { get; set; }
+
+    public static Punter Create(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction) 
+        => new(id: id,
+               firstname: firstname,
+               middlename: middlename,
+               lastname: lastname,
+               username: username,
+               password: password,
+               jurisdiction: jurisdiction);
 
     public void Encrypt()
     {

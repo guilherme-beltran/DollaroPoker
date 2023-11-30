@@ -41,12 +41,12 @@ public class FakePunterRepository
     }
 
     public static Punter CreatePunter()
-        => new(id: 1,
-               firstname: "Fulano",
-               middlename: "Ciclano",
-               lastname: "Beltrano",
-               username: "usuario",
-               password: "senha123",
-               jurisdiction: new Jurisdiction(id: 241,
-                                              sknId: 1));
+        => Punter.Create(id: 1,
+                         firstname: "Fulano",
+                         middlename: "Ciclano",
+                         lastname: "Beltrano",
+                         username: "usuario",
+                         password: "senha123",
+                         jurisdiction: new Jurisdiction(id: 241,
+                                                        sknId: 1));
 }

@@ -9,7 +9,7 @@ public sealed class User : Entity
 {
     public User() {}
 
-    public User(int id, string username, string? password, Jurisdiction jurisdiction)
+    private User(int id, string username, string? password, Jurisdiction jurisdiction)
     {
         UserId = id;
         Username = username;
@@ -18,7 +18,6 @@ public sealed class User : Entity
         Name = username;
         CreationTime = DateTime.UtcNow;
         Access = "ALLOW";
-        Credit = 5000;
     }
 
     [Key]
@@ -136,6 +135,12 @@ public sealed class User : Entity
     
     [ForeignKey("TypeId")]
     public TypeUser TypeUser { get; set; }
+
+    public static User Create(int id, string username, string? password, Jurisdiction jurisdiction) 
+        => new(id: id,
+               username: username,
+               password: password,
+               jurisdiction: jurisdiction);
 
     public void Encrypt()
     {
