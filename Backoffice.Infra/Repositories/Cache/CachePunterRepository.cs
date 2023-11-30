@@ -20,13 +20,11 @@ public sealed class CachePunterRepository : ICachePunterRepository
     {
         string key = $"punter-{id}";
 
-
-
         return await _memoryCache.GetOrCreateAsync(
             key: key,
             entry =>
             {
-                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(20));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
                 return _decorated.GetByIdAsync(id);
             });
     }

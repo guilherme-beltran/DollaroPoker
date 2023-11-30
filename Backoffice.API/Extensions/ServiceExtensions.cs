@@ -34,11 +34,12 @@ public static class ServiceExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IJurisdictionRepository, JurisdictionRepository>();
         services.AddScoped<ISequenceRepository, SequenceRepository>();
-        services.AddScoped<ITokenService, TokenService>();
-
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IPunterRepository, PunterRepository>();
+        services.AddScoped<ITokenService, TokenService>();
+
         services.AddScoped<ICachePunterRepository, CachePunterRepository>();
+        services.AddScoped<ICacheUserRepository, CacheUserRepository>();
 
         services.AddScoped<ICreateUserHandler, CreateUserHandler>();
         services.AddScoped<ICreatePunterHandler, CreatePunterHandler>();

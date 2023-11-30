@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Backoffice.Infra\Backoffice.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
 </Project>
