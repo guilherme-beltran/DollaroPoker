@@ -17,6 +17,8 @@ public sealed class User : Entity
         Jurisdiction = jurisdiction;
         Name = username;
         CreationTime = DateTime.UtcNow;
+        Access = "ALLOW";
+        Credit = 5000;
     }
 
     [Key]
@@ -158,8 +160,22 @@ public sealed class User : Entity
         if (punter is null)
         {
             AddNotification("User.DepositCredit", "Invalid Punter");
+            return;
         }
 
+        if (amount <= 0)
+        {
+            AddNotification("User.DepositCredit", "It's not allowed to deposit credit less than 0");
+            return;
+        }
+
+        if (amount > Credit)
+        {
+            AddNotification("User.DepositCredit", "Account without balance");
+            return;
+        }
+
+        DecreaseCredit(amount);
         punter!.ReceiveCredit(amount, notes);
 
     }
@@ -174,5 +190,13 @@ public sealed class User : Entity
         }
 
         punter!.TransferCredit(credit, notes);
+        AddCredit(credit);
+    }
+
+    public void AddCredit(int credit) => Credit += credit;
+
+    public void DecreaseCredit(int credit)
+    {
+        Credit -= credit;
     }
 }

@@ -31,7 +31,7 @@ public class FakeUserRepository
         };
     }
 
-    public static User? CreateValidUser() 
+    public static User CreateUser() 
         => new(id: 1, 
                username: "Usuario padrão", 
                password: "senha123",

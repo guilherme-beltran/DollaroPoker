@@ -1,4 +1,5 @@
 ﻿using Backoffice.Application.UseCases.Punters.Create;
+using Backoffice.Domain.Entities;
 
 namespace Backoffice.Tests.FakeRepositories;
 
@@ -38,4 +39,14 @@ public class FakePunterRepository
             Skin = 1
         };
     }
+
+    public static Punter CreatePunter()
+        => new(id: 1,
+               firstname: "Fulano",
+               middlename: "Ciclano",
+               lastname: "Beltrano",
+               username: "usuario",
+               password: "senha123",
+               jurisdiction: new Jurisdiction(id: 241,
+                                              sknId: 1));
 }

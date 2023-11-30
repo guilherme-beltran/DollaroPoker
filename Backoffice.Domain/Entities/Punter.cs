@@ -19,6 +19,7 @@ public sealed class Punter : Entity
         Password = password;
         Jurisdiction = jurisdiction;
         RegistrationDate = DateTime.UtcNow;
+        Credit = 5000;
     }
 
     [Key]
