@@ -4,10 +4,12 @@ using Backoffice.Application.UseCases.Login;
 using Backoffice.Application.UseCases.Punters.Create;
 using Backoffice.Application.UseCases.Users.Create;
 using Backoffice.Domain.Interfaces.Repositories;
+using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Interfaces.Services;
 using Backoffice.Domain.Interfaces.UnitOfWork;
 using Backoffice.Infra.Contexts.Backoffice;
 using Backoffice.Infra.Repositories;
+using Backoffice.Infra.Repositories.Cache;
 using Backoffice.Infra.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,16 +24,21 @@ public static class ServiceExtensions
             new MySqlServerVersion(new Version(8, 0, 35))));
 
         services.AddScoped<IBackofficeContext, BackofficeContext>();
+        
     }
 
     public static void AddServices(this IServiceCollection services)
     {
+        services.AddMemoryCache();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IPunterRepository, PunterRepository>();
         services.AddScoped<IJurisdictionRepository, JurisdictionRepository>();
         services.AddScoped<ISequenceRepository, SequenceRepository>();
         services.AddScoped<ITokenService, TokenService>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPunterRepository, PunterRepository>();
+        services.AddScoped<ICachePunterRepository, CachePunterRepository>();
 
         services.AddScoped<ICreateUserHandler, CreateUserHandler>();
         services.AddScoped<ICreatePunterHandler, CreatePunterHandler>();

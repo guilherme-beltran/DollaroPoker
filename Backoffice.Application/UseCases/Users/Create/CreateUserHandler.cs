@@ -95,10 +95,10 @@ internal sealed class CreateUserHandler : ICreateUserHandler
 
         sequence!.UpdateSequence();
 
-        var user = new User(id: sequence.NextSequence!,
-                            username: request.Username!,
-                            password: request.Password,
-                            jurisdiction: jurisdiction);
+        var user = User.Create(id: sequence.NextSequence!,
+                               username: request.Username!,
+                               password: request.Password,
+                               jurisdiction: jurisdiction);
 
         user.Encrypt();
 

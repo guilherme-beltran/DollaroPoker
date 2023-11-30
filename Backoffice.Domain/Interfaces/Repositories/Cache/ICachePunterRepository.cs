@@ -1,8 +1,7 @@
 ﻿using Backoffice.Domain.Entities;
 
-namespace Backoffice.Domain.Interfaces.Repositories;
-
-public interface IPunterRepository
+namespace Backoffice.Domain.Interfaces.Repositories.Cache;
+public interface ICachePunterRepository
 {
     Task<Punter> GetByIdAsync(int id);
     Task<bool> IsRegisteredAsync(string username);

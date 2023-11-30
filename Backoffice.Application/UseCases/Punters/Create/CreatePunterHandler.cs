@@ -94,13 +94,13 @@ internal class CreatePunterHandler : ICreatePunterHandler
 
         sequence!.UpdateSequence();
 
-        var punter = new Punter(id: sequence.NextSequence,
-                                firstname: request.FirstName,
-                                middlename: request.MiddleName,
-                                lastname: request.LastName,
-                                username: request.Username,
-                                password: request.Password,
-                                jurisdiction: jurisdiction!);
+        var punter = Punter.Create(id: sequence.NextSequence,
+                                   firstname: request.FirstName,
+                                   middlename: request.MiddleName,
+                                   lastname: request.LastName,
+                                   username: request.Username,
+                                   password: request.Password,
+                                   jurisdiction: jurisdiction!);
 
         punter.Encrypt();
 

@@ -5,17 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backoffice.Infra.Repositories;
 
-internal sealed class PunterRepository : IPunterRepository
+public sealed class PunterRepository : IPunterRepository
 {
     private readonly BackofficeContext _context;
 
     public PunterRepository(BackofficeContext context) => _context = context;
 
-    public async Task<Punter?> GetByIdAsync(int id)
+    public async Task<Punter> GetByIdAsync(int id)
         => await _context
-                    .Punters
-                    .Where(x => x.PunterId == id)
-                    .FirstOrDefaultAsync();
+                .Punters
+                .Where(p => p.PunterId.Equals(id))
+                .FirstOrDefaultAsync();
 
     public async Task<bool> IsRegisteredAsync(string username)
         => await _context
@@ -23,4 +23,5 @@ internal sealed class PunterRepository : IPunterRepository
              .AnyAsync(x => x.Username == username);
 
     public async Task Insert(Punter punter, CancellationToken cancellationToken) => await _context.Punters.AddAsync(punter, cancellationToken);
+
 }
