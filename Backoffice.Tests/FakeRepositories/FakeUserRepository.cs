@@ -1,4 +1,6 @@
 ﻿using Backoffice.Application.UseCases.Users.Create;
+using Backoffice.Domain.Entities;
+using ZstdSharp.Unsafe;
 
 namespace Backoffice.Tests.FakeRepositories;
 
@@ -28,4 +30,11 @@ public class FakeUserRepository
             ConfirmPassword = "senha123"
         };
     }
+
+    public static User? CreateValidUser() 
+        => new(id: 1, 
+               username: "Usuario padrão", 
+               password: "senha123",
+               jurisdiction: new Jurisdiction(id: 7,
+                                              sknId: 82));
 }

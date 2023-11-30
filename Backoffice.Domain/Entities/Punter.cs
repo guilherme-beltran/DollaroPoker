@@ -235,6 +235,9 @@ public sealed class Punter : Entity
     [Column("PUN_BETTING_PREFERENCES")]
     public string? BettingPreferences { get; set; }
 
+    [NotMapped]
+    public int Credit { get; private set; } = 0;
+
     [ForeignKey("FkJurisdiction")]
     public Jurisdiction? Jurisdiction { get; set; }
 
@@ -255,6 +258,18 @@ public sealed class Punter : Entity
     public bool VerifyPassword(string password)
     {
         return Password == password.EncryptUsingSHA256();
+    }
+
+    public void ReceiveCredit(int credit, string? notes = null)
+    {
+        Credit += credit;
+        Notes = notes;
+    }
+
+    public void TransferCredit(int credit, string? notes = null)
+    {
+        Credit -= credit;
+        Notes = notes;
     }
 
 }

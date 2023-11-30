@@ -126,6 +126,9 @@ public sealed class User : Entity
     [Column("AUS_SESS_ID", TypeName = "varchar(50)")]
     public string? SessionId { get; set; }
 
+    [NotMapped]
+    public int Credit { get; private set; } = 0;
+
     [ForeignKey("JurisdictionId")]
     public Jurisdiction Jurisdiction { get; set; }
     
@@ -148,8 +151,28 @@ public sealed class User : Entity
         return Password == password;
     }
 
-    public void DepositCredit(Punter punter)
+    public void DepositCredit(Punter punter,
+                              int amount,
+                              string? notes = null)
     {
+        if (punter is null)
+        {
+            AddNotification("User.DepositCredit", "Invalid Punter");
+        }
 
+        punter!.ReceiveCredit(amount, notes);
+
+    }
+
+    public void WithdrawCredit(Punter punter,
+                               int credit,
+                               string? notes = null)
+    {
+        if (punter is null)
+        {
+            AddNotification("User.DepositCredit", "Invalid Punter");
+        }
+
+        punter!.TransferCredit(credit, notes);
     }
 }
