@@ -1,5 +1,7 @@
 ﻿using Backoffice.Application.Interfaces.Punters;
 using Backoffice.Application.UseCases.Punters.Create;
+using Backoffice.Application.UseCases.Punters.Lock;
+using Backoffice.Application.UseCases.Punters.Unlock;
 using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +41,40 @@ public class PunterController : ControllerBase
 
         if (response.Error.StatusCode == HttpStatusCode.Conflict)
             return Conflict(response);
+
+        if (response.Error.StatusCode == HttpStatusCode.InternalServerError)
+            return StatusCode(500, response);
+
+        return Ok(response);
+    }
+
+    [HttpPatch]
+    [Route("/lock")]
+    public async Task<ActionResult> Lock([FromBody] LockPunterCommand command,
+                                         [FromServices] ILockPunterHandler handler,
+                                         CancellationToken cancellationToken)
+    {
+        var response = await handler.Handle(command, cancellationToken);
+
+        if (response.Error.StatusCode == HttpStatusCode.BadRequest)
+            return BadRequest(response);
+
+        if (response.Error.StatusCode == HttpStatusCode.InternalServerError)
+            return StatusCode(500, response);
+
+        return Ok(response);
+    }
+
+    [HttpPatch]
+    [Route("/unlock")]
+    public async Task<ActionResult> Unlock([FromBody] UnlockPunterCommand command,
+                                         [FromServices] IUnlockPunterHandler handler,
+                                         CancellationToken cancellationToken)
+    {
+        var response = await handler.Handle(command, cancellationToken);
+
+        if (response.Error.StatusCode == HttpStatusCode.BadRequest)
+            return BadRequest(response);
 
         if (response.Error.StatusCode == HttpStatusCode.InternalServerError)
             return StatusCode(500, response);

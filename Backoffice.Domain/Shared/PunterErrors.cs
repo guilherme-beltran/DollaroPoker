@@ -23,4 +23,7 @@ public static class PunterErrors
     public static Error Exception(string key, string message)
        => new(key, HttpStatusCode.InternalServerError, message);
 
+    public static Error Failure(string key, string message)
+       => new(key, HttpStatusCode.InternalServerError, message);
+
 }

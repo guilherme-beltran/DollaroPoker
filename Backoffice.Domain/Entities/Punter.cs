@@ -19,7 +19,6 @@ public sealed class Punter : Entity
         Password = password;
         Jurisdiction = jurisdiction;
         RegistrationDate = DateTime.UtcNow;
-        Access = "ALLOW";
     }
 
     [Key]
@@ -84,7 +83,7 @@ public sealed class Punter : Entity
     public DateTime? LastLoggedIn { get; set; }
 
     [Column("PUN_ACCESS")]
-    public string? Access { get; set; } = "deny";
+    public string? Access { get; set; } = "DENY";
 
     [Column("PUN_NIN_CODE")]
     public string? NinCode { get; set; }
@@ -245,14 +244,19 @@ public sealed class Punter : Entity
     [ForeignKey("FkUser")]
     public User? User { get; set; }
 
-    public static Punter Create(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction) 
-        => new(id: id,
-               firstname: firstname,
-               middlename: middlename,
-               lastname: lastname,
-               username: username,
-               password: password,
-               jurisdiction: jurisdiction);
+    public static Punter Create(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction)
+    {
+        var punter = new Punter(id: id,
+                                firstname: firstname,
+                                middlename: middlename,
+                                lastname: lastname,
+                                username: username,
+                                password: password,
+                                jurisdiction: jurisdiction);
+        punter.Unlock();
+
+        return punter;
+    }
 
     public void Encrypt()
     {
@@ -268,6 +272,30 @@ public sealed class Punter : Entity
     public bool VerifyPassword(string password)
     {
         return Password == password.EncryptUsingSHA256();
+    }
+
+    public void Lock(string? reason = null)
+    {
+        if (Access == "DENY")
+        {
+            AddNotification("Punter.Access", "This punter already locked.");
+            return;
+        }
+
+        Access = "DENY";
+        LockReason = reason;
+    }
+
+    public void Unlock(string? reason = null)
+    {
+        if (Access == "ALLOW")
+        {
+            AddNotification("Punter.Access", "This punter already unlocked.");
+            return;
+        }
+
+        Access = "ALLOW";
+        LockReason = reason;
     }
 
 }

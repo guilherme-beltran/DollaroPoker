@@ -158,4 +158,28 @@ public sealed class User : Entity
         return Password == password;
     }
 
+    public void LockPunter(Punter punter, string? reasons = null)
+    {
+        if (punter is null)
+        {
+            AddNotification("User.LockPunter", "Invalid punter.");
+            return;
+        }
+
+        punter.Lock(reasons);
+
+
+    }
+
+    public void UnlockPunter(Punter punter, string? reasons = null)
+    {
+        if (punter is null)
+        {
+            AddNotification("User.UnlockPunter", "Invalid punter.");
+            return;
+        }
+        punter.Unlock(reasons);
+
+    }
+
 }

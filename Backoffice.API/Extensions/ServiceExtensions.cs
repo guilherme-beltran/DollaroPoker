@@ -2,6 +2,8 @@
 using Backoffice.Application.Interfaces.Users;
 using Backoffice.Application.UseCases.Login;
 using Backoffice.Application.UseCases.Punters.Create;
+using Backoffice.Application.UseCases.Punters.Lock;
+using Backoffice.Application.UseCases.Punters.Unlock;
 using Backoffice.Application.UseCases.Users.Create;
 using Backoffice.Domain.Interfaces.Repositories;
 using Backoffice.Domain.Interfaces.Repositories.Cache;
@@ -44,6 +46,8 @@ public static class ServiceExtensions
         services.AddScoped<ICreateUserHandler, CreateUserHandler>();
         services.AddScoped<ICreatePunterHandler, CreatePunterHandler>();
         services.AddScoped<ILoginHandler, LoginHandler>();
+        services.AddScoped<ILockPunterHandler, LockPunterHandler>();
+        services.AddScoped<IUnlockPunterHandler, UnlockPunterHandler>();
     }
 
 }
