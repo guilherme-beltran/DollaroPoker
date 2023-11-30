@@ -7,7 +7,13 @@ namespace Backoffice.Domain.Entities;
 [Table("punter")]
 public sealed class Punter : Entity
 {
-    public Punter() { }
+    public Punter() 
+    {
+        if (Access.Length > 5)
+        {
+            AddNotification("Punter.Access", "Invalid Access field size. The access field can have a maximum of 5 characters.");
+        }
+    }
 
     private Punter(int id, string firstname, string middlename, string lastname, string username, string? password, Jurisdiction jurisdiction)
     {

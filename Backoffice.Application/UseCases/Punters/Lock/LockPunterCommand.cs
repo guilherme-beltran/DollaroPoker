@@ -1,5 +1,4 @@
-﻿using Backoffice.Domain.Entities;
-using Backoffice.Domain.Interfaces;
+﻿using Backoffice.Domain.Interfaces;
 using Flunt.Notifications;
 using Flunt.Validations;
 
