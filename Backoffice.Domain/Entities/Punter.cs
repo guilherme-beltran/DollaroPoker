@@ -270,16 +270,4 @@ public sealed class Punter : Entity
         return Password == password.EncryptUsingSHA256();
     }
 
-    public void ReceiveCredit(int credit, string? notes = null)
-    {
-        Credit += credit;
-        Notes = notes;
-    }
-
-    public void TransferCredit(int credit, string? notes = null)
-    {
-        Credit -= credit;
-        Notes = notes;
-    }
-
 }
