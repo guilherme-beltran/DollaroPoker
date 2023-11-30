@@ -8,7 +8,7 @@ using System.Net;
 
 namespace Backoffice.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
     {

@@ -6,7 +6,7 @@ using System.Net;
 
 namespace Backoffice.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/login")]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace Backoffice.API.Controllers
         /// <param name="handler"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("/login")]
+        [Route("")]
         public async Task<ActionResult<Response>> Login([FromBody] LoginCommand request,
                                                              [FromServices] ILoginHandler handler)
         {

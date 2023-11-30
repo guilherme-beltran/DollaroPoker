@@ -49,7 +49,7 @@ public class PunterController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("/lock")]
+    [Route("lock")]
     public async Task<ActionResult> Lock([FromBody] LockPunterCommand command,
                                          [FromServices] ILockPunterHandler handler,
                                          CancellationToken cancellationToken)
@@ -66,7 +66,7 @@ public class PunterController : ControllerBase
     }
 
     [HttpPatch]
-    [Route("/unlock")]
+    [Route("unlock")]
     public async Task<ActionResult> Unlock([FromBody] UnlockPunterCommand command,
                                          [FromServices] IUnlockPunterHandler handler,
                                          CancellationToken cancellationToken)
