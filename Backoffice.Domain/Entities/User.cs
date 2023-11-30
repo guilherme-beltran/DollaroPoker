@@ -147,4 +147,9 @@ public sealed class User : Entity
     {
         return Password == password;
     }
+
+    public void DepositCredit(Punter punter)
+    {
+
+    }
 }
