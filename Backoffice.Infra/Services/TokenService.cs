@@ -25,7 +25,7 @@ internal sealed class TokenService : ITokenService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = GerarClaims(response),
-            Expires = DateTime.Now.AddHours(8),
+            Expires = DateTime.Now.AddHours(4),
             SigningCredentials = credentials
         };
         var token = handler.CreateToken(tokenDescriptor);

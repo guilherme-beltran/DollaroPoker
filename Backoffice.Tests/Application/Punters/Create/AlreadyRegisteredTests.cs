@@ -1,6 +1,7 @@
 ﻿using Backoffice.Application.Interfaces.Punters;
 using Backoffice.Application.UseCases.Punters.Create;
 using Backoffice.Domain.Interfaces.Repositories;
+using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Interfaces.UnitOfWork;
 using Backoffice.Tests.FakeRepositories;
 using Moq;
@@ -14,19 +15,19 @@ public class AlreadyRegisteredTests
 {
     private CreatePunterCommand? command;
     private ICreatePunterHandler handler;
-    private readonly Mock<IPunterRepository> _punterRepository;
+    private readonly Mock<ICachePunterRepository> _cachePunterRepository;
     private readonly Mock<IJurisdictionRepository> _jurisdictionRepository;
     private readonly Mock<ISequenceRepository> _sequenceRepository;
     private readonly Mock<IUnitOfWork> _uow;
 
     public AlreadyRegisteredTests()
     {
-        _punterRepository = new Mock<IPunterRepository>();
+        _cachePunterRepository = new Mock<ICachePunterRepository>();
         _jurisdictionRepository = new Mock<IJurisdictionRepository>();
         _sequenceRepository = new Mock<ISequenceRepository>();
         _uow = new Mock<IUnitOfWork>();
 
-        handler = new CreatePunterHandler(_punterRepository.Object,
+        handler = new CreatePunterHandler(_cachePunterRepository.Object,
                                           _jurisdictionRepository.Object,
                                           _sequenceRepository.Object,
                                           _uow.Object);
@@ -39,7 +40,7 @@ public class AlreadyRegisteredTests
 
         command = FakePunterRepository.CreateValidPunterCommand();
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(true);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(true);
 
         #endregion
 
@@ -64,7 +65,7 @@ public class AlreadyRegisteredTests
 
         command = FakePunterRepository.CreateValidPunterCommand();
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(true);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(true);
 
         #endregion
 

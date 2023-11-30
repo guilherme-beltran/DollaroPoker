@@ -3,6 +3,7 @@ using Backoffice.Application.UseCases.Users.Create;
 using Backoffice.Domain.DTO;
 using Backoffice.Domain.Interfaces.Repositories;
 using Backoffice.Domain.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -14,17 +15,19 @@ namespace Backoffice.API.Controllers
     {
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<UserDTO>> GetAll([FromServices] IUserRepository _repository)
+        [Authorize]
+        public async Task<ActionResult<UserDTO>> GetAll([FromServices] IUserRepository _repository,
+                                                        CancellationToken cancellationToken)
         {
-            var users = await _repository.GetAll();
+            var users = await _repository.GetAll(cancellationToken);
 
             return Ok(users);
         }
 
         [HttpPost]
         public async Task<ActionResult<Response>> Insert([FromBody] CreateUserCommand request,
-                                                    [FromServices] ICreateUserHandler handler,
-                                                    CancellationToken cancellationToken)
+                                                         [FromServices] ICreateUserHandler handler,
+                                                         CancellationToken cancellationToken)
         {
             var response = await handler.Handle(request, cancellationToken);
 

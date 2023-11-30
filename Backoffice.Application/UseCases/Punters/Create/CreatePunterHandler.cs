@@ -1,6 +1,7 @@
 ﻿using Backoffice.Application.Interfaces.Punters;
 using Backoffice.Domain.Entities;
 using Backoffice.Domain.Interfaces.Repositories;
+using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Interfaces.UnitOfWork;
 using Backoffice.Domain.Shared;
 using MySql.Data.MySqlClient;
@@ -9,14 +10,17 @@ namespace Backoffice.Application.UseCases.Punters.Create;
 
 internal class CreatePunterHandler : ICreatePunterHandler
 {
-    private readonly IPunterRepository _punterRepository;
+    private readonly ICachePunterRepository _cachePunterRepository;
     private readonly IJurisdictionRepository _jurisdictionRepository;
     private readonly ISequenceRepository _sequenceRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreatePunterHandler(IPunterRepository punterRepository, IJurisdictionRepository jurisdictionRepository, ISequenceRepository sequenceRepository, IUnitOfWork unitOfWork)
+    public CreatePunterHandler(ICachePunterRepository cachePunterRepository,
+                               IJurisdictionRepository jurisdictionRepository,
+                               ISequenceRepository sequenceRepository,
+                               IUnitOfWork unitOfWork)
     {
-        _punterRepository = punterRepository;
+        _cachePunterRepository = cachePunterRepository;
         _jurisdictionRepository = jurisdictionRepository;
         _sequenceRepository = sequenceRepository;
         _unitOfWork = unitOfWork;
@@ -47,7 +51,7 @@ internal class CreatePunterHandler : ICreatePunterHandler
 
         try
         {
-            var isRegistered = await _punterRepository.IsRegisteredAsync(request.Username!);
+            var isRegistered = await _cachePunterRepository.IsRegisteredAsync(request.Username!);
             if (isRegistered)
                 return Response.Failure(PunterErrors.AlreadyRegistered);
         }
@@ -109,7 +113,7 @@ internal class CreatePunterHandler : ICreatePunterHandler
         {
             _unitOfWork.BeginTransaction();
 
-            await _punterRepository.Insert(punter: punter, cancellationToken: cancellationToken);
+            await _cachePunterRepository.Insert(punter: punter, cancellationToken: cancellationToken);
 
             await _unitOfWork.Commit(cancellationToken: cancellationToken);
 

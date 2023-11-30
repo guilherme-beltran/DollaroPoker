@@ -12,7 +12,7 @@ internal sealed class UserRepository : IUserRepository
 
     public UserRepository(BackofficeContext context) => _context = context;
 
-    public async Task<IEnumerable<UserDTO>> GetAll()
+    public async Task<IEnumerable<UserDTO>> GetAll(CancellationToken cancellationToken)
     {
         var users = await _context
                           .Users
@@ -95,7 +95,7 @@ internal sealed class UserRepository : IUserRepository
                                   Params = u.Jurisdiction.Params
                               }
                           })
-                          .ToListAsync();
+                          .ToListAsync(cancellationToken);
 
         return users;
     }

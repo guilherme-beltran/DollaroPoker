@@ -3,6 +3,7 @@ using Backoffice.Application.Interfaces.Punters;
 using Backoffice.Application.UseCases.Punters.Create;
 using Backoffice.Domain.Entities;
 using Backoffice.Domain.Interfaces.Repositories;
+using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Interfaces.UnitOfWork;
 using Backoffice.Domain.Shared;
 using Backoffice.Tests.FakeRepositories;
@@ -16,7 +17,7 @@ public class CommandTests
 {
     private CreatePunterCommand? command;
     private ICreatePunterHandler handler;
-    private readonly Mock<IPunterRepository> _punterRepository;
+    private readonly Mock<ICachePunterRepository> _cachePunterRepository;
     private readonly Mock<IJurisdictionRepository> _jurisdictionRepository;
     private readonly Mock<ISequenceRepository> _sequenceRepository;
     private readonly Mock<IUnitOfWork> _uow;
@@ -24,12 +25,12 @@ public class CommandTests
 
     public CommandTests()
     {
-        _punterRepository = new Mock<IPunterRepository>();
+        _cachePunterRepository = new Mock<ICachePunterRepository>();
         _jurisdictionRepository = new Mock<IJurisdictionRepository>();
         _sequenceRepository = new Mock<ISequenceRepository>();
         _uow = new Mock<IUnitOfWork>();
 
-        handler = new CreatePunterHandler(_punterRepository.Object, _jurisdictionRepository.Object, _sequenceRepository.Object, _uow.Object);
+        handler = new CreatePunterHandler(_cachePunterRepository.Object, _jurisdictionRepository.Object, _sequenceRepository.Object, _uow.Object);
     }
 
     [TestMethod]
@@ -62,7 +63,7 @@ public class CommandTests
 
         command = FakePunterRepository.CreatePunterRequestNullData();
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
 
         #endregion
 
@@ -101,7 +102,7 @@ public class CommandTests
             Skin = skin
         };
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
 
         #endregion
 
@@ -146,7 +147,7 @@ public class CommandTests
         var sequence = fixture.Create<Sequence>();
         var jurisdiction = fixture.Create<Jurisdiction>();
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
 
         _jurisdictionRepository.Setup(j => j.GetByIdAsync(command.Club)).ReturnsAsync(jurisdiction);
 
@@ -176,7 +177,7 @@ public class CommandTests
         command = FakePunterRepository.CreateValidPunterCommand();
         command.Username = username;
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
 
         var sequence = fixture.Create<Sequence>();
         var jurisdiction = fixture.Create<Jurisdiction>();
@@ -225,7 +226,7 @@ public class CommandTests
         command = FakePunterRepository.CreateValidPunterCommand();
         command.Username = username;
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
         var sequence = fixture.Create<Sequence>();
         var jurisdiction = fixture.Create<Jurisdiction>();
         _jurisdictionRepository.Setup(j => j.GetByIdAsync(command.Club)).ReturnsAsync(jurisdiction);
@@ -272,7 +273,7 @@ public class CommandTests
         command = FakePunterRepository.CreateValidPunterCommand();
         command.ConfirmPassword = confirmPassword;
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
         var sequence = fixture.Create<Sequence>();
         var jurisdiction = fixture.Create<Jurisdiction>();
         _jurisdictionRepository.Setup(j => j.GetByIdAsync(command.Club)).ReturnsAsync(jurisdiction);
@@ -305,7 +306,7 @@ public class CommandTests
         command = FakePunterRepository.CreateValidPunterCommand();
         command.ConfirmPassword = confirmPassword;
 
-        _punterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
+        _cachePunterRepository.Setup(ur => ur.IsRegisteredAsync(command.Username)).ReturnsAsync(false);
         var sequence = fixture.Create<Sequence>();
         var jurisdiction = fixture.Create<Jurisdiction>();
         _jurisdictionRepository.Setup(j => j.GetByIdAsync(command.Club)).ReturnsAsync(jurisdiction);

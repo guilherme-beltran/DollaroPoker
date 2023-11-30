@@ -4,6 +4,7 @@ using Backoffice.Application.UseCases.Punters.Lock;
 using Backoffice.Application.UseCases.Punters.Unlock;
 using Backoffice.Domain.Interfaces.Repositories.Cache;
 using Backoffice.Domain.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -22,6 +23,7 @@ public class PunterController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize]
     public async Task<ActionResult> GetById([FromRoute] int id)
     {
         var punter = await _cachePunterRepository.GetByIdAsync(id);
@@ -30,6 +32,7 @@ public class PunterController : ControllerBase
 
     [HttpPost]
     [Route("")]
+    [Authorize]
     public async Task<ActionResult<Response>> Insert([FromBody] CreatePunterCommand request,
                                                     [FromServices] ICreatePunterHandler handler,
                                                     CancellationToken cancellationToken)
@@ -50,6 +53,7 @@ public class PunterController : ControllerBase
 
     [HttpPatch]
     [Route("lock")]
+    [Authorize]
     public async Task<ActionResult> Lock([FromBody] LockPunterCommand command,
                                          [FromServices] ILockPunterHandler handler,
                                          CancellationToken cancellationToken)
@@ -67,6 +71,7 @@ public class PunterController : ControllerBase
 
     [HttpPatch]
     [Route("unlock")]
+    [Authorize]
     public async Task<ActionResult> Unlock([FromBody] UnlockPunterCommand command,
                                          [FromServices] IUnlockPunterHandler handler,
                                          CancellationToken cancellationToken)
