@@ -24,7 +24,7 @@ public sealed class CachePunterRepository : ICachePunterRepository
             key: key,
             entry =>
             {
-                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(240));
                 return _decorated.GetByIdAsync(id);
             });
     }
@@ -37,7 +37,7 @@ public sealed class CachePunterRepository : ICachePunterRepository
             key: key,
             entry =>
             {
-                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(60));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(240));
                 return _decorated.GetByUsernameAsync(username);
             });
     }
@@ -63,7 +63,7 @@ public sealed class CachePunterRepository : ICachePunterRepository
 
         _memoryCache.Set(key, isRegistered, new MemoryCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(240)
         });
 
         return isRegistered;
@@ -72,48 +72,26 @@ public sealed class CachePunterRepository : ICachePunterRepository
     public async Task<bool> LockAsync(Punter punter, CancellationToken cancellationToken)
     {
         string key = $"punter-{punter.Username}";
-        var cachePunter = _memoryCache.Get(key);
-        bool locked;
-        if (cachePunter is null)
-        {
-            locked = await _decorated.Lock(punter, cancellationToken);
-            _memoryCache.Set(key, punter, new MemoryCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
-            });
 
-            return locked;
-        }
-
+        var locked = await _decorated.Lock(punter, cancellationToken);
         _memoryCache.Set(key, punter, new MemoryCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(240)
         });
-        locked = true;
+
         return locked;
     }
 
     public async Task<bool> UnlockAsync(Punter punter, CancellationToken cancellationToken)
     {
         string key = $"punter-{punter.Username}";
-        var cachePunter = _memoryCache.Get(key);
-        bool locked;
-        if (cachePunter is null)
-        {
-            locked = await _decorated.Unlock(punter, cancellationToken);
-            _memoryCache.Set(key, punter, new MemoryCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
-            });
-
-            return locked;
-        }
-
+        
+        bool locked = await _decorated.Unlock(punter, cancellationToken);
         _memoryCache.Set(key, punter, new MemoryCacheEntryOptions
         {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60)
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(240)
         });
-        locked = true;
+
         return locked;
     }
 
