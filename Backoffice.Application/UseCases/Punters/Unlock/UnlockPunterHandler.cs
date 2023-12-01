@@ -59,7 +59,9 @@ internal sealed class UnlockPunterHandler : IUnlockPunterHandler
             {
                 return PunterErrors.Failure("UnlockPunterHandler.UnlockAsync", "There was a failure. Please try again later.");
             }
-                
+
+            return Response.Sucess($"Punter {request.Username} unlocked with success.");
+
         }
         catch (Exception ex)
         {
@@ -67,8 +69,5 @@ internal sealed class UnlockPunterHandler : IUnlockPunterHandler
         }
 
         #endregion
-
-
-        return Response.Sucess($"Punter {request.Username} unlocked with success.");
     }
 }

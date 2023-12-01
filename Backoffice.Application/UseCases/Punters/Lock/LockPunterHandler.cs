@@ -59,7 +59,9 @@ internal sealed class LockPunterHandler : ILockPunterHandler
             {
                 return PunterErrors.Failure("LockPunterHandler.LockAsync", "There was a failure. Please try again later.");
             }
-                
+
+            return Response.Sucess($"Punter {request.Username} locked with success.");
+
         }
         catch (Exception ex)
         {
@@ -67,8 +69,5 @@ internal sealed class LockPunterHandler : ILockPunterHandler
         }
 
         #endregion
-
-
-        return Response.Sucess($"Punter {request.Username} locked with success.");
     }
 }
